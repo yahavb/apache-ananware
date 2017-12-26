@@ -11,9 +11,5 @@ RUN cd /var/www/ \
   && chmod g+w /var/log/apache2 \
   && addgroup apache wheel
 
-#RUN apk del git \
-#  && rm -rf /var/cache/apk/* \
-#  && rm -rf /var/www/localhost
-
 #RUN sed -i 's#ErrorLog /proc/self/fd/2#ErrorLog "|$/bin/cat 1>\&2"#' /etc/apache2/httpd.conf
 #RUN sed -i 's#CustomLog /proc/self/fd/1 combined#CustomLog "|/bin/cat" combined#' /etc/apache2/httpd.conf
