@@ -1,0 +1,82 @@
+# Default values for mychart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  apache:
+     repository: us.gcr.io/ananware-186718/apache-ssl
+     tag: 0.7
+  pullPolicy: IfNotPresent
+service:
+  frontend:
+    type: LoadBalancer
+    port: 80
+    selector:
+      app: ananwareweb
+      tier: frontend
+  secure: 
+    type: LoadBalancer
+    port: 443
+    selector:
+      app: ananwareweb
+      tier: frontend
+ingress:
+  enabled: false
+  # Used to create an Ingress record.
+  hosts:
+    - chart-example.local
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
+resources: 
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+   limits:
+    cpu: 100m
+    memory: 128Mi
+   requests:
+    cpu: 100m
+    memory: 128Mi
+index: >-
+  <h1>Ananware Systems</h1>
+  <p>Consideration for Distributed Utility Computing System of Systems</p>
+  <hr>
+
+  <p><b>News</b></p>
+  <hr>
+
+  <p><b>Publications</b></p>
+
+  <p><b>2017</b><p>
+  <p><a href="http://onlinelibrary.wiley.com/doi/10.1002/sys.21393/full">Cloud Computing Cost and Energy Optimization through Federated Cloud SoS</a><br>
+  <i>Biran, Yahav, George Collins, and Joel Dubow. Systems Engineering 20.3 (2017): 280-293.</i></p>
+  <p><a href="http://file.scirp.org/Html/2-6202069_80196.htm">Considerations for Planning a Multi-Platform Energy Utility System</a><br>
+  <i>Biran, Y., Dubow, J., Pasricha, S., Collins, G. and Borky, J. (2017), 9, 723-749. doi: 10.4236/epe.2017.912046.</i></p>
+  <p><a href="https://astesj.com/v02/i06/p01/">Clean Energy Use for Cloud Computing Federation Workloads</a><br>
+  <i>Y. Biran, S. Pasricha, G. Collins, J. Dubow, Advances in Science, Technology and Engineering Systems Journal, vol. 2, no. 6, pp. 1-12 (2017).</i></p>
+
+  <p><b>2016</b><p>
+  <p><a href="http://ieeexplore.ieee.org/abstract/document/7513658/">Open compute-equipment design specification as a standard for cloud computing</a><br>
+  <i>Biran, Yahav, and George Collins. Zooming Innovation in Consumer Electronics International Conference (ZINC), IEEE, 2016.</i></p>
+  <p><a href="http://ieeexplore.ieee.org/abstract/document/7462529/">Coordinating Green Clouds as Data-Intensive Computing</a><br>
+  <i>Biran, Yahav, George Collins, and Joseph Liberatore. Green Technologies Conference (GreenTech), 2016 IEEE. IEEE, 2016.</i></p>
+  <p><a href="http://ieeexplore.ieee.org/abstract/document/7870553/">Enabling green content distribution network by cloud orchestration</a><br>
+  <i>Biran, Y., Pasricha, S., Collins, G., & Dubow, J.  Smart Cloud Networks & Systems (SCNS). IEEE, 2016.</i></p>
+
+  <p><b>2015</b><p>
+  <p><a href="http://ieeexplore.ieee.org/abstract/document/7391238/">Multi-tenant utility computing with compute containers</a><br>
+  <i>Collins, George, and Yahav Biran. Consumer Electronics-Berlin (ICCE-Berlin), 2015 IEEE 5th International Conference on. IEEE, 2015.</i></p>
+
+  <hr>
+  <p><b>Bio</b></p>
+  <address>Contact us<br>
+  <a href="mailto:jdubow@ananware.systems?subject=Question about Ananware Systems">Joel Dubow</a>
+  <a href="mailto:ybiran@ananware.systems?subject=Question about Ananware Systems">Yahav Biran</a><br>
+  </address>

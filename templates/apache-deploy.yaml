@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ "apachedeploy" }}
+  labels:
+    app: {{ "apachehelm" }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ "1" }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.frontend.selector.app }}
+        tier: {{ .Values.service.frontend.selector.tier }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: wwwdata-volume
+          configMap:
+            name: {{ "apachedeploy" }}
+      containers:
+        - name: {{ "apache" }}
+          image: {{ .Values.image.apache.repository }}:{{ .Values.image.apache.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["httpd","-D","FOREGROUND"]
+          volumeMounts:
+            - mountPath: /var/www/localhost/htdocs/
+              name: wwwdata-volume
+          ports:
+            - containerPort: {{ .Values.service.frontend.port }}
+            - containerPort: {{ .Values.service.secure.port }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.frontend.port }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.frontend.port }}
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu}}
+              memory: {{ .Values.resources.limits.memory}}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu}}
+              memory: {{ .Values.resources.requests.memory}}
+          env:
+          - name: {{"GET_HOSTS_FROM"}}
+            value: {{"dns"}}
