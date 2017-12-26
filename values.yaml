@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   apache:
      repository: us.gcr.io/ananware-186718/apache-ssl
-     tag: 0.7
+     tag: 0.9
   pullPolicy: IfNotPresent
 service:
   frontend:
