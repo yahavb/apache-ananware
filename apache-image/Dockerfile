@@ -11,6 +11,8 @@ RUN cd /var/www/ \
   && chmod g+w /var/log/apache2 \
   && addgroup apache wheel
 
+ADD httpd.conf /etc/apache2/httpd.conf
+ADD ssl.conf /etc/apache2/conf.d/ssl.conf
 #RUN apk del git \
 #  && rm -rf /var/cache/apk/* \
 #  && rm -rf /var/www/localhost

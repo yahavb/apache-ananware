@@ -1,5 +1,5 @@
 #!/bin/bash
-ver=0.7
+ver=0.9
 image=`docker build . | grep "Successfully built"| awk '{print $NF}'`
 if [ -z "$image" ]
 then
