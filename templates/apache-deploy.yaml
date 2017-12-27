@@ -20,14 +20,20 @@ spec:
         - name: wwwdata-volume
           configMap:
             name: {{ "apachedeploy" }}
+        - name: cert-chain
+          secret:
+            secretName: cert
       containers:
         - name: {{ "apache" }}
           image: {{ .Values.image.apache.repository }}:{{ .Values.image.apache.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["httpd","-D","FOREGROUND"]
           volumeMounts:
-            - mountPath: /var/www/localhost/htdocs/
-              name: wwwdata-volume
+            - name: wwwdata-volume
+              mountPath: /var/www/localhost/htdocs/
+            - name: cert-chain
+              readOnly: true
+              mountPath: /etc/ssl/apache2/ 
           ports:
             - containerPort: {{ .Values.service.frontend.port }}
             - containerPort: {{ .Values.service.secure.port }}
